@@ -1,0 +1,37 @@
+1. Team Information:
+   - Name: Rudy Garcilazo
+   - Course ID: CS4318
+
+2. Meeting Schedule:
+   Since I am working alone, I plan to dedicate daily time slots to work on the project. I will work on the project every day for several hours to ensure timely completion within the one-week timeline.
+
+Day 1: Studied grammar rules and project requirements
+Set up the development environment and began working on lexer rules in scanner.l.
+Day 2: Created basic lexer and parser structure
+Defined tokens and began setting up the parser.y file with basic token declarations.
+Day 3: Implemented symbol table functionality
+Created strtab.c/h with basic symbol table operations and scope management.
+Day 4: Built AST structure
+Developed tree.c/h for AST nodes and basic tree operations.
+Day 5: Added semantic analysis
+Implemented type checking and basic error reporting mechanisms.
+Day 6: Enhanced error detection
+Added more comprehensive error checking for arrays, functions, and variable declarations.
+Day 7: Implemented scope handling
+Added proper scope management for functions and compound statements.
+
+Challenges Faced (Last Two Days):
+Day 8: Debugging Segmentation Faults
+Encountered persistent segmentation faults in symbol table operations
+Found that current_scope wasn't being properly initialized
+Had to add null checks throughout the code
+Fixed initialization by adding global scope creation at program start
+Spent significant time debugging with GDB to track down memory issues
+
+Day 9: Error Message Formatting
+Struggled with matching expected error message format
+Had issues with array bounds checking not reporting correctly
+Function call argument checking wasn't catching all cases
+Some error messages were being duplicated
+Despite fixes, couldn't get error messages to exactly match expected output
+Made decision to submit with working core functionality even though error messages weren't perfect

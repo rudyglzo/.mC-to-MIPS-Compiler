@@ -1,0 +1,93 @@
+1. Your name, your partner’s name, course id.
+   - Your Name: Rudy Garcilazo
+   - Partner’s Name: None
+   - Course ID: CS4318.001
+
+2. How often do you plan to work on the project? What software platform do you plan to use for collaboration?
+   - Plan: I plan to work on the project every other day.
+   - Collaboration Platform: Since I'm working individually, I will use GitHub for version control and tracking progress.
+
+3. Provide two examples of how you will test the correctness of your code. These examples should be different from the ones provided in this document.
+   - Example 1:
+     Input:
+     int mainfunc() {
+         intmain = 5;
+         int intVariable = 10;
+         char charmain = 'a';
+         if (intmain > 0) {
+             return;
+         }
+     }
+    
+     Expected Output:
+
+     <KEYWORD, int> : (1:1)
+     <ID, mainfunc> : (1:5)
+     <PUNCTUATION, (> : (1:13)
+     <PUNCTUATION, )> : (1:14)
+     <PUNCTUATION, {> : (1:16)
+     <ID, intmain> : (2:5)
+     <OPERATOR, => : (2:13)
+     <INTEGER, 5> : (2:15)
+     <PUNCTUATION, ;> : (2:16)
+     <KEYWORD, int> : (3:5)
+     <ID, intVariable> : (3:9)
+     <OPERATOR, => : (3:21)
+     <INTEGER, 10> : (3:23)
+     <PUNCTUATION, ;> : (3:25)
+     <KEYWORD, char> : (4:5)
+     <ID, charmain> : (4:10)
+     <OPERATOR, => : (4:19)
+     <CHARACTER, 'a'> : (4:21)
+     <PUNCTUATION, ;> : (4:24)
+     <KEYWORD, if> : (5:5)
+     <PUNCTUATION, (> : (5:8)
+     <ID, intmain> : (5:9)
+     <OPERATOR, > : (5:17)
+     <INTEGER, 0> : (5:19)
+     <PUNCTUATION, )> : (5:20)
+     <PUNCTUATION, {> : (5:22)
+     <KEYWORD, return> : (6:9)
+     <PUNCTUATION, ;> : (6:15)
+     <PUNCTUATION, }> : (7:5)
+     <PUNCTUATION, }> : (8:1)
+   
+
+   - Example 2:
+     Input:
+     
+     int main() {
+         char* validStr = "Hello, World!\n";
+         char* invalidStr = "Invalid \y escape";
+         char* unterminatedStr = "This string doesn't terminate properly
+         return 0;
+     }
+    
+     Expected Output:
+
+     <KEYWORD, int> : (1:1)
+     <ID, main> : (1:5)
+     <PUNCTUATION, (> : (1:9)
+     <PUNCTUATION, )> : (1:10)
+     <PUNCTUATION, {> : (1:12)
+     <KEYWORD, char> : (2:5)
+     <OPERATOR, *> : (2:9)
+     <ID, validStr> : (2:11)
+     <OPERATOR, => : (2:20)
+     <STRING, "Hello, World!\n"> : (2:22)
+     <PUNCTUATION, ;> : (2:39)
+     <KEYWORD, char> : (3:5)
+     <OPERATOR, *> : (3:9)
+     <ID, invalidStr> : (3:11)
+     <OPERATOR, => : (3:22)
+     <ERROR, Invalid escape sequence> : (3:24)
+     <PUNCTUATION, ;> : (3:43)
+     <KEYWORD, char> : (4:5)
+     <OPERATOR, *> : (4:9)
+     <ID, unterminatedStr> : (4:11)
+     <OPERATOR, => : (4:27)
+     <ERROR, Unterminated string> : (4:29)
+     <KEYWORD, return> : (5:5)
+     <INTEGER, 0> : (5:12)
+     <PUNCTUATION, ;> : (5:13)
+     <PUNCTUATION, }> : (6:1)

@@ -1,0 +1,39 @@
+CS4318 Assignment 4: MIPS Code Generator Documentation
+
+1. Student Information
+Name: Rudy Garcilazo
+Course ID: CS4318
+
+2. Project Schedule and Tools
+The project was completed individually over multiple work sessions. Primary development tools included Git for version control, GCC for compilation, and SPIM for testing the generated assembly code.
+
+3. Implementation Overview
+This project was developed individually. The implementation focuses on core MIPS code generation functionality, with emphasis on arithmetic operations and basic function handling. For detailed implementation specifics, please refer to the README.md file.
+
+4. Test Cases
+Two primary test cases were developed to verify compiler functionality. The first test validates arithmetic operations and output capabilities, while the second test examines function definition handling. Complete test case details and expected outputs can be found in the README.md file.
+
+5. Known Issues
+Several implementation challenges were encountered during development:
+- testFunc.s contains incomplete implementation and should not be executed
+- Limited support for complex function interactions
+- Some edge cases in error handling remain unaddressed
+
+Additional debugging details are documented in the README.md file.
+
+6. Calling Convention
+The MIPS calling convention implemented in this compiler follows a straightforward process for function calls. When a function is called, the compiler generates assembly code to preserve the current execution state and set up the new function's environment. The return address is stored in $ra to enable return to the calling function. Arguments are pushed onto the stack in sequence, and the stack pointer $sp is adjusted accordingly to allocate space for local variables. The function prologue saves caller-saved registers to preserve their values. Upon function completion, these steps are reversed - registers are restored, the stack is cleaned up, and execution returns to the stored address in $ra.
+7. Build and Execution Instructions
+Basic compilation steps:
+cd assgn4
+make clean
+make
+
+Test execution:
+./compile_tests.sh
+
+WARNING: Do not attempt to execute testFunc.s as it contains incomplete implementation.
+
+For detailed execution instructions and additional options, please consult the README.md file.
+
+Note: This document provides a high-level overview of the project implementation. For more detailed information about each section, including comprehensive test cases, detailed implementation notes, and complete execution instructions, please refer to the accompanying README.md file.

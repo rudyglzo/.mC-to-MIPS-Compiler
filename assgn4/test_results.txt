@@ -1,0 +1,137 @@
+All Test Outputs and SPIM Results
+=================================
+
+Test: GRADerrMismatchFunc
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+0
+
+
+
+Test: GRADtestNumParams
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+
+
+
+Test: GRADtestNumParamsOut
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+00
+
+
+
+Test: condTest
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+spim: (parser) Label is defined for the second time on line 94 of file test/out/condTest.s
+	  main:
+	      ^
+spim: (parser) Label is defined for the second time on line 151 of file test/out/condTest.s
+	  endmain:
+	         ^
+5
+
+
+
+Test: errMulDeclFunc
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+spim: (parser) Label is defined for the second time on line 67 of file test/out/errMulDeclFunc.s
+	  foo:
+	     ^
+spim: (parser) Label is defined for the second time on line 97 of file test/out/errMulDeclFunc.s
+	  endfoo:
+	        ^
+
+
+
+Test: errMulDeclVar
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+
+
+
+Test: errUnDeclFunc
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+spim: (parser) syntax error on line 1 of file test/out/errUnDeclFunc.s
+	  error: line 2: Undefined function
+	         ^
+The following symbols are undefined:
+main
+
+Instruction references undefined symbol at 0x00400014
+  [0x00400014]	0x0c000000  jal 0x00000000 [main]           ; 188: jal main
+
+
+
+Test: errUnDeclVar
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+spim: (parser) syntax error on line 1 of file test/out/errUnDeclVar.s
+	  warning: line 2: 'x' undeclared (first use in this function)
+	           ^
+The following symbols are undefined:
+main
+
+Instruction references undefined symbol at 0x00400014
+  [0x00400014]	0x0c000000  jal 0x00000000 [main]           ; 188: jal main
+
+
+
+Test: globlIntOut
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+3
+
+
+
+Test: loclIntOut
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+3
+
+
+
+Test: outputArith
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+8
+
+
+
+Test: testArith
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+54
+
+
+
+Test: testCond
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+0
+
+
+
+Test: testFuncsOutput
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+spim: (parser) Label is defined for the second time on line 94 of file test/out/testFuncsOutput.s
+	  main:
+	      ^
+spim: (parser) Label is defined for the second time on line 151 of file test/out/testFuncsOutput.s
+	  endmain:
+	         ^
+5
+
+
+
+Test: testLoop
+-------------------
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+10
+
+
+

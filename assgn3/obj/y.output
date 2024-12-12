@@ -1,0 +1,1101 @@
+   0  $accept : program $end
+
+   1  program : declList
+
+   2  declList : declList decl
+   3           | decl
+
+   4  decl : varDecl
+   5       | funDecl
+
+   6  varDecl : typeSpec ID arrayDecl SEMICLN
+
+   7  typeSpec : KWD_INT
+   8           | KWD_CHAR
+   9           | KWD_VOID
+
+  10  arrayDecl : LSQ_BRKT INTCONST RSQ_BRKT
+  11            | LSQ_BRKT RSQ_BRKT
+  12            |
+
+  13  formalDeclList : formalDeclList COMMA formalDecl
+  14                 | formalDecl
+  15                 |
+
+  16  formalDecl : typeSpec ID arrayDecl
+
+  17  funDecl : typeSpec ID LPAREN formalDeclList RPAREN funBody
+
+  18  funBody : LCRLY_BRKT localDeclList stmtList RCRLY_BRKT
+
+  19  localDeclList : localDeclList varDecl
+  20                |
+
+  21  stmtList : stmtList stmt
+  22           |
+
+  23  stmt : assignStmt
+  24       | compoundStmt
+  25       | condStmt
+  26       | loopStmt
+  27       | returnStmt
+  28       | error SEMICLN
+
+  29  $$1 :
+
+  30  compoundStmt : LCRLY_BRKT $$1 stmtList RCRLY_BRKT
+
+  31  assignStmt : var OPER_ASGN expression SEMICLN
+
+  32  condStmt : KWD_IF LPAREN expression RPAREN stmt
+  33           | KWD_IF LPAREN expression RPAREN stmt KWD_ELSE stmt
+
+  34  $$2 :
+
+  35  loopStmt : KWD_WHILE $$2 LPAREN expression RPAREN stmt
+
+  36  returnStmt : KWD_RETURN SEMICLN
+  37             | KWD_RETURN expression SEMICLN
+
+  38  expression : addExpr
+  39             | addExpr relop addExpr
+
+  40  relop : OPER_LTE
+  41        | OPER_LT
+  42        | OPER_GT
+  43        | OPER_GTE
+  44        | OPER_EQ
+  45        | OPER_NEQ
+
+  46  addExpr : term
+  47          | addExpr addop term
+
+  48  addop : OPER_ADD
+  49        | OPER_SUB
+
+  50  term : factor
+  51       | term mulop factor
+
+  52  mulop : OPER_MUL
+  53        | OPER_DIV
+
+  54  factor : LPAREN expression RPAREN
+  55         | var
+  56         | funcCallExpr
+  57         | INTCONST
+  58         | CHARCONST
+
+  59  var : ID LSQ_BRKT expression RSQ_BRKT
+
+  60  funcCallExpr : ID LPAREN argList RPAREN
+
+  61  argList : argList COMMA expression
+  62          | expression
+  63          |
+
+state 0
+	$accept : . program $end  (0)
+
+	KWD_INT  shift 1
+	KWD_CHAR  shift 2
+	KWD_VOID  shift 3
+	.  error
+
+	program  goto 4
+	declList  goto 5
+	decl  goto 6
+	varDecl  goto 7
+	funDecl  goto 8
+	typeSpec  goto 9
+
+
+state 1
+	typeSpec : KWD_INT .  (7)
+
+	.  reduce 7
+
+
+state 2
+	typeSpec : KWD_CHAR .  (8)
+
+	.  reduce 8
+
+
+state 3
+	typeSpec : KWD_VOID .  (9)
+
+	.  reduce 9
+
+
+state 4
+	$accept : program . $end  (0)
+
+	$end  accept
+
+
+state 5
+	program : declList .  (1)
+	declList : declList . decl  (2)
+
+	KWD_INT  shift 1
+	KWD_CHAR  shift 2
+	KWD_VOID  shift 3
+	$end  reduce 1
+
+	decl  goto 10
+	varDecl  goto 7
+	funDecl  goto 8
+	typeSpec  goto 9
+
+
+state 6
+	declList : decl .  (3)
+
+	.  reduce 3
+
+
+state 7
+	decl : varDecl .  (4)
+
+	.  reduce 4
+
+
+state 8
+	decl : funDecl .  (5)
+
+	.  reduce 5
+
+
+state 9
+	varDecl : typeSpec . ID arrayDecl SEMICLN  (6)
+	funDecl : typeSpec . ID LPAREN formalDeclList RPAREN funBody  (17)
+
+	ID  shift 11
+	.  error
+
+
+state 10
+	declList : declList decl .  (2)
+
+	.  reduce 2
+
+
+state 11
+	varDecl : typeSpec ID . arrayDecl SEMICLN  (6)
+	funDecl : typeSpec ID . LPAREN formalDeclList RPAREN funBody  (17)
+	arrayDecl : .  (12)
+
+	LPAREN  shift 12
+	LSQ_BRKT  shift 13
+	SEMICLN  reduce 12
+
+	arrayDecl  goto 14
+
+
+state 12
+	funDecl : typeSpec ID LPAREN . formalDeclList RPAREN funBody  (17)
+	formalDeclList : .  (15)
+
+	KWD_INT  shift 1
+	KWD_CHAR  shift 2
+	KWD_VOID  shift 3
+	RPAREN  reduce 15
+	COMMA  reduce 15
+
+	typeSpec  goto 15
+	formalDeclList  goto 16
+	formalDecl  goto 17
+
+
+state 13
+	arrayDecl : LSQ_BRKT . INTCONST RSQ_BRKT  (10)
+	arrayDecl : LSQ_BRKT . RSQ_BRKT  (11)
+
+	INTCONST  shift 18
+	RSQ_BRKT  shift 19
+	.  error
+
+
+state 14
+	varDecl : typeSpec ID arrayDecl . SEMICLN  (6)
+
+	SEMICLN  shift 20
+	.  error
+
+
+state 15
+	formalDecl : typeSpec . ID arrayDecl  (16)
+
+	ID  shift 21
+	.  error
+
+
+state 16
+	formalDeclList : formalDeclList . COMMA formalDecl  (13)
+	funDecl : typeSpec ID LPAREN formalDeclList . RPAREN funBody  (17)
+
+	RPAREN  shift 22
+	COMMA  shift 23
+	.  error
+
+
+state 17
+	formalDeclList : formalDecl .  (14)
+
+	.  reduce 14
+
+
+state 18
+	arrayDecl : LSQ_BRKT INTCONST . RSQ_BRKT  (10)
+
+	RSQ_BRKT  shift 24
+	.  error
+
+
+state 19
+	arrayDecl : LSQ_BRKT RSQ_BRKT .  (11)
+
+	.  reduce 11
+
+
+state 20
+	varDecl : typeSpec ID arrayDecl SEMICLN .  (6)
+
+	.  reduce 6
+
+
+state 21
+	formalDecl : typeSpec ID . arrayDecl  (16)
+	arrayDecl : .  (12)
+
+	LSQ_BRKT  shift 13
+	RPAREN  reduce 12
+	COMMA  reduce 12
+
+	arrayDecl  goto 25
+
+
+state 22
+	funDecl : typeSpec ID LPAREN formalDeclList RPAREN . funBody  (17)
+
+	LCRLY_BRKT  shift 26
+	.  error
+
+	funBody  goto 27
+
+
+state 23
+	formalDeclList : formalDeclList COMMA . formalDecl  (13)
+
+	KWD_INT  shift 1
+	KWD_CHAR  shift 2
+	KWD_VOID  shift 3
+	.  error
+
+	typeSpec  goto 15
+	formalDecl  goto 28
+
+
+state 24
+	arrayDecl : LSQ_BRKT INTCONST RSQ_BRKT .  (10)
+
+	.  reduce 10
+
+
+state 25
+	formalDecl : typeSpec ID arrayDecl .  (16)
+
+	.  reduce 16
+
+
+state 26
+	funBody : LCRLY_BRKT . localDeclList stmtList RCRLY_BRKT  (18)
+	localDeclList : .  (20)
+
+	.  reduce 20
+
+	localDeclList  goto 29
+
+
+state 27
+	funDecl : typeSpec ID LPAREN formalDeclList RPAREN funBody .  (17)
+
+	.  reduce 17
+
+
+state 28
+	formalDeclList : formalDeclList COMMA formalDecl .  (13)
+
+	.  reduce 13
+
+
+state 29
+	funBody : LCRLY_BRKT localDeclList . stmtList RCRLY_BRKT  (18)
+	localDeclList : localDeclList . varDecl  (19)
+	stmtList : .  (22)
+
+	KWD_INT  shift 1
+	KWD_CHAR  shift 2
+	KWD_VOID  shift 3
+	error  reduce 22
+	ID  reduce 22
+	KWD_IF  reduce 22
+	KWD_WHILE  reduce 22
+	KWD_RETURN  reduce 22
+	LCRLY_BRKT  reduce 22
+	RCRLY_BRKT  reduce 22
+
+	varDecl  goto 30
+	typeSpec  goto 31
+	stmtList  goto 32
+
+
+state 30
+	localDeclList : localDeclList varDecl .  (19)
+
+	.  reduce 19
+
+
+state 31
+	varDecl : typeSpec . ID arrayDecl SEMICLN  (6)
+
+	ID  shift 33
+	.  error
+
+
+state 32
+	funBody : LCRLY_BRKT localDeclList stmtList . RCRLY_BRKT  (18)
+	stmtList : stmtList . stmt  (21)
+
+	error  shift 34
+	ID  shift 35
+	KWD_IF  shift 36
+	KWD_WHILE  shift 37
+	KWD_RETURN  shift 38
+	LCRLY_BRKT  shift 39
+	RCRLY_BRKT  shift 40
+	.  error
+
+	stmt  goto 41
+	compoundStmt  goto 42
+	assignStmt  goto 43
+	condStmt  goto 44
+	loopStmt  goto 45
+	returnStmt  goto 46
+	var  goto 47
+
+
+state 33
+	varDecl : typeSpec ID . arrayDecl SEMICLN  (6)
+	arrayDecl : .  (12)
+
+	LSQ_BRKT  shift 13
+	SEMICLN  reduce 12
+
+	arrayDecl  goto 14
+
+
+state 34
+	stmt : error . SEMICLN  (28)
+
+	SEMICLN  shift 48
+	.  error
+
+
+state 35
+	var : ID . LSQ_BRKT expression RSQ_BRKT  (59)
+
+	LSQ_BRKT  shift 49
+	.  error
+
+
+state 36
+	condStmt : KWD_IF . LPAREN expression RPAREN stmt  (32)
+	condStmt : KWD_IF . LPAREN expression RPAREN stmt KWD_ELSE stmt  (33)
+
+	LPAREN  shift 50
+	.  error
+
+
+state 37
+	loopStmt : KWD_WHILE . $$2 LPAREN expression RPAREN stmt  (35)
+	$$2 : .  (34)
+
+	.  reduce 34
+
+	$$2  goto 51
+
+
+state 38
+	returnStmt : KWD_RETURN . SEMICLN  (36)
+	returnStmt : KWD_RETURN . expression SEMICLN  (37)
+
+	INTCONST  shift 52
+	CHARCONST  shift 53
+	ID  shift 54
+	LPAREN  shift 55
+	SEMICLN  shift 56
+	.  error
+
+	expression  goto 57
+	addExpr  goto 58
+	term  goto 59
+	factor  goto 60
+	funcCallExpr  goto 61
+	var  goto 62
+
+
+state 39
+	compoundStmt : LCRLY_BRKT . $$1 stmtList RCRLY_BRKT  (30)
+	$$1 : .  (29)
+
+	.  reduce 29
+
+	$$1  goto 63
+
+
+state 40
+	funBody : LCRLY_BRKT localDeclList stmtList RCRLY_BRKT .  (18)
+
+	.  reduce 18
+
+
+state 41
+	stmtList : stmtList stmt .  (21)
+
+	.  reduce 21
+
+
+state 42
+	stmt : compoundStmt .  (24)
+
+	.  reduce 24
+
+
+state 43
+	stmt : assignStmt .  (23)
+
+	.  reduce 23
+
+
+state 44
+	stmt : condStmt .  (25)
+
+	.  reduce 25
+
+
+state 45
+	stmt : loopStmt .  (26)
+
+	.  reduce 26
+
+
+state 46
+	stmt : returnStmt .  (27)
+
+	.  reduce 27
+
+
+state 47
+	assignStmt : var . OPER_ASGN expression SEMICLN  (31)
+
+	OPER_ASGN  shift 64
+	.  error
+
+
+state 48
+	stmt : error SEMICLN .  (28)
+
+	.  reduce 28
+
+
+state 49
+	var : ID LSQ_BRKT . expression RSQ_BRKT  (59)
+
+	INTCONST  shift 52
+	CHARCONST  shift 53
+	ID  shift 54
+	LPAREN  shift 55
+	.  error
+
+	expression  goto 65
+	addExpr  goto 58
+	term  goto 59
+	factor  goto 60
+	funcCallExpr  goto 61
+	var  goto 62
+
+
+state 50
+	condStmt : KWD_IF LPAREN . expression RPAREN stmt  (32)
+	condStmt : KWD_IF LPAREN . expression RPAREN stmt KWD_ELSE stmt  (33)
+
+	INTCONST  shift 52
+	CHARCONST  shift 53
+	ID  shift 54
+	LPAREN  shift 55
+	.  error
+
+	expression  goto 66
+	addExpr  goto 58
+	term  goto 59
+	factor  goto 60
+	funcCallExpr  goto 61
+	var  goto 62
+
+
+state 51
+	loopStmt : KWD_WHILE $$2 . LPAREN expression RPAREN stmt  (35)
+
+	LPAREN  shift 67
+	.  error
+
+
+state 52
+	factor : INTCONST .  (57)
+
+	.  reduce 57
+
+
+state 53
+	factor : CHARCONST .  (58)
+
+	.  reduce 58
+
+
+state 54
+	var : ID . LSQ_BRKT expression RSQ_BRKT  (59)
+	funcCallExpr : ID . LPAREN argList RPAREN  (60)
+
+	LPAREN  shift 68
+	LSQ_BRKT  shift 49
+	.  error
+
+
+state 55
+	factor : LPAREN . expression RPAREN  (54)
+
+	INTCONST  shift 52
+	CHARCONST  shift 53
+	ID  shift 54
+	LPAREN  shift 55
+	.  error
+
+	expression  goto 69
+	addExpr  goto 58
+	term  goto 59
+	factor  goto 60
+	funcCallExpr  goto 61
+	var  goto 62
+
+
+state 56
+	returnStmt : KWD_RETURN SEMICLN .  (36)
+
+	.  reduce 36
+
+
+state 57
+	returnStmt : KWD_RETURN expression . SEMICLN  (37)
+
+	SEMICLN  shift 70
+	.  error
+
+
+state 58
+	expression : addExpr .  (38)
+	expression : addExpr . relop addExpr  (39)
+	addExpr : addExpr . addop term  (47)
+
+	OPER_ADD  shift 71
+	OPER_SUB  shift 72
+	OPER_LT  shift 73
+	OPER_GT  shift 74
+	OPER_LTE  shift 75
+	OPER_GTE  shift 76
+	OPER_EQ  shift 77
+	OPER_NEQ  shift 78
+	RPAREN  reduce 38
+	RSQ_BRKT  reduce 38
+	COMMA  reduce 38
+	SEMICLN  reduce 38
+
+	relop  goto 79
+	addop  goto 80
+
+
+state 59
+	addExpr : term .  (46)
+	term : term . mulop factor  (51)
+
+	OPER_MUL  shift 81
+	OPER_DIV  shift 82
+	OPER_ADD  reduce 46
+	OPER_SUB  reduce 46
+	OPER_LT  reduce 46
+	OPER_GT  reduce 46
+	OPER_LTE  reduce 46
+	OPER_GTE  reduce 46
+	OPER_EQ  reduce 46
+	OPER_NEQ  reduce 46
+	RPAREN  reduce 46
+	RSQ_BRKT  reduce 46
+	COMMA  reduce 46
+	SEMICLN  reduce 46
+
+	mulop  goto 83
+
+
+state 60
+	term : factor .  (50)
+
+	.  reduce 50
+
+
+state 61
+	factor : funcCallExpr .  (56)
+
+	.  reduce 56
+
+
+state 62
+	factor : var .  (55)
+
+	.  reduce 55
+
+
+state 63
+	compoundStmt : LCRLY_BRKT $$1 . stmtList RCRLY_BRKT  (30)
+	stmtList : .  (22)
+
+	.  reduce 22
+
+	stmtList  goto 84
+
+
+state 64
+	assignStmt : var OPER_ASGN . expression SEMICLN  (31)
+
+	INTCONST  shift 52
+	CHARCONST  shift 53
+	ID  shift 54
+	LPAREN  shift 55
+	.  error
+
+	expression  goto 85
+	addExpr  goto 58
+	term  goto 59
+	factor  goto 60
+	funcCallExpr  goto 61
+	var  goto 62
+
+
+state 65
+	var : ID LSQ_BRKT expression . RSQ_BRKT  (59)
+
+	RSQ_BRKT  shift 86
+	.  error
+
+
+state 66
+	condStmt : KWD_IF LPAREN expression . RPAREN stmt  (32)
+	condStmt : KWD_IF LPAREN expression . RPAREN stmt KWD_ELSE stmt  (33)
+
+	RPAREN  shift 87
+	.  error
+
+
+state 67
+	loopStmt : KWD_WHILE $$2 LPAREN . expression RPAREN stmt  (35)
+
+	INTCONST  shift 52
+	CHARCONST  shift 53
+	ID  shift 54
+	LPAREN  shift 55
+	.  error
+
+	expression  goto 88
+	addExpr  goto 58
+	term  goto 59
+	factor  goto 60
+	funcCallExpr  goto 61
+	var  goto 62
+
+
+state 68
+	funcCallExpr : ID LPAREN . argList RPAREN  (60)
+	argList : .  (63)
+
+	INTCONST  shift 52
+	CHARCONST  shift 53
+	ID  shift 54
+	LPAREN  shift 55
+	RPAREN  reduce 63
+	COMMA  reduce 63
+
+	expression  goto 89
+	addExpr  goto 58
+	term  goto 59
+	factor  goto 60
+	funcCallExpr  goto 61
+	argList  goto 90
+	var  goto 62
+
+
+state 69
+	factor : LPAREN expression . RPAREN  (54)
+
+	RPAREN  shift 91
+	.  error
+
+
+state 70
+	returnStmt : KWD_RETURN expression SEMICLN .  (37)
+
+	.  reduce 37
+
+
+state 71
+	addop : OPER_ADD .  (48)
+
+	.  reduce 48
+
+
+state 72
+	addop : OPER_SUB .  (49)
+
+	.  reduce 49
+
+
+state 73
+	relop : OPER_LT .  (41)
+
+	.  reduce 41
+
+
+state 74
+	relop : OPER_GT .  (42)
+
+	.  reduce 42
+
+
+state 75
+	relop : OPER_LTE .  (40)
+
+	.  reduce 40
+
+
+state 76
+	relop : OPER_GTE .  (43)
+
+	.  reduce 43
+
+
+state 77
+	relop : OPER_EQ .  (44)
+
+	.  reduce 44
+
+
+state 78
+	relop : OPER_NEQ .  (45)
+
+	.  reduce 45
+
+
+state 79
+	expression : addExpr relop . addExpr  (39)
+
+	INTCONST  shift 52
+	CHARCONST  shift 53
+	ID  shift 54
+	LPAREN  shift 55
+	.  error
+
+	addExpr  goto 92
+	term  goto 59
+	factor  goto 60
+	funcCallExpr  goto 61
+	var  goto 62
+
+
+state 80
+	addExpr : addExpr addop . term  (47)
+
+	INTCONST  shift 52
+	CHARCONST  shift 53
+	ID  shift 54
+	LPAREN  shift 55
+	.  error
+
+	term  goto 93
+	factor  goto 60
+	funcCallExpr  goto 61
+	var  goto 62
+
+
+state 81
+	mulop : OPER_MUL .  (52)
+
+	.  reduce 52
+
+
+state 82
+	mulop : OPER_DIV .  (53)
+
+	.  reduce 53
+
+
+state 83
+	term : term mulop . factor  (51)
+
+	INTCONST  shift 52
+	CHARCONST  shift 53
+	ID  shift 54
+	LPAREN  shift 55
+	.  error
+
+	factor  goto 94
+	funcCallExpr  goto 61
+	var  goto 62
+
+
+state 84
+	stmtList : stmtList . stmt  (21)
+	compoundStmt : LCRLY_BRKT $$1 stmtList . RCRLY_BRKT  (30)
+
+	error  shift 34
+	ID  shift 35
+	KWD_IF  shift 36
+	KWD_WHILE  shift 37
+	KWD_RETURN  shift 38
+	LCRLY_BRKT  shift 39
+	RCRLY_BRKT  shift 95
+	.  error
+
+	stmt  goto 41
+	compoundStmt  goto 42
+	assignStmt  goto 43
+	condStmt  goto 44
+	loopStmt  goto 45
+	returnStmt  goto 46
+	var  goto 47
+
+
+state 85
+	assignStmt : var OPER_ASGN expression . SEMICLN  (31)
+
+	SEMICLN  shift 96
+	.  error
+
+
+state 86
+	var : ID LSQ_BRKT expression RSQ_BRKT .  (59)
+
+	.  reduce 59
+
+
+state 87
+	condStmt : KWD_IF LPAREN expression RPAREN . stmt  (32)
+	condStmt : KWD_IF LPAREN expression RPAREN . stmt KWD_ELSE stmt  (33)
+
+	error  shift 34
+	ID  shift 35
+	KWD_IF  shift 36
+	KWD_WHILE  shift 37
+	KWD_RETURN  shift 38
+	LCRLY_BRKT  shift 39
+	.  error
+
+	stmt  goto 97
+	compoundStmt  goto 42
+	assignStmt  goto 43
+	condStmt  goto 44
+	loopStmt  goto 45
+	returnStmt  goto 46
+	var  goto 47
+
+
+state 88
+	loopStmt : KWD_WHILE $$2 LPAREN expression . RPAREN stmt  (35)
+
+	RPAREN  shift 98
+	.  error
+
+
+state 89
+	argList : expression .  (62)
+
+	.  reduce 62
+
+
+state 90
+	funcCallExpr : ID LPAREN argList . RPAREN  (60)
+	argList : argList . COMMA expression  (61)
+
+	RPAREN  shift 99
+	COMMA  shift 100
+	.  error
+
+
+state 91
+	factor : LPAREN expression RPAREN .  (54)
+
+	.  reduce 54
+
+
+state 92
+	expression : addExpr relop addExpr .  (39)
+	addExpr : addExpr . addop term  (47)
+
+	OPER_ADD  shift 71
+	OPER_SUB  shift 72
+	RPAREN  reduce 39
+	RSQ_BRKT  reduce 39
+	COMMA  reduce 39
+	SEMICLN  reduce 39
+
+	addop  goto 80
+
+
+state 93
+	addExpr : addExpr addop term .  (47)
+	term : term . mulop factor  (51)
+
+	OPER_MUL  shift 81
+	OPER_DIV  shift 82
+	OPER_ADD  reduce 47
+	OPER_SUB  reduce 47
+	OPER_LT  reduce 47
+	OPER_GT  reduce 47
+	OPER_LTE  reduce 47
+	OPER_GTE  reduce 47
+	OPER_EQ  reduce 47
+	OPER_NEQ  reduce 47
+	RPAREN  reduce 47
+	RSQ_BRKT  reduce 47
+	COMMA  reduce 47
+	SEMICLN  reduce 47
+
+	mulop  goto 83
+
+
+state 94
+	term : term mulop factor .  (51)
+
+	.  reduce 51
+
+
+state 95
+	compoundStmt : LCRLY_BRKT $$1 stmtList RCRLY_BRKT .  (30)
+
+	.  reduce 30
+
+
+state 96
+	assignStmt : var OPER_ASGN expression SEMICLN .  (31)
+
+	.  reduce 31
+
+
+97: shift/reduce conflict (shift 101, reduce 32) on KWD_ELSE
+state 97
+	condStmt : KWD_IF LPAREN expression RPAREN stmt .  (32)
+	condStmt : KWD_IF LPAREN expression RPAREN stmt . KWD_ELSE stmt  (33)
+
+	KWD_ELSE  shift 101
+	error  reduce 32
+	ID  reduce 32
+	KWD_IF  reduce 32
+	KWD_WHILE  reduce 32
+	KWD_RETURN  reduce 32
+	LCRLY_BRKT  reduce 32
+	RCRLY_BRKT  reduce 32
+
+
+state 98
+	loopStmt : KWD_WHILE $$2 LPAREN expression RPAREN . stmt  (35)
+
+	error  shift 34
+	ID  shift 35
+	KWD_IF  shift 36
+	KWD_WHILE  shift 37
+	KWD_RETURN  shift 38
+	LCRLY_BRKT  shift 39
+	.  error
+
+	stmt  goto 102
+	compoundStmt  goto 42
+	assignStmt  goto 43
+	condStmt  goto 44
+	loopStmt  goto 45
+	returnStmt  goto 46
+	var  goto 47
+
+
+state 99
+	funcCallExpr : ID LPAREN argList RPAREN .  (60)
+
+	.  reduce 60
+
+
+state 100
+	argList : argList COMMA . expression  (61)
+
+	INTCONST  shift 52
+	CHARCONST  shift 53
+	ID  shift 54
+	LPAREN  shift 55
+	.  error
+
+	expression  goto 103
+	addExpr  goto 58
+	term  goto 59
+	factor  goto 60
+	funcCallExpr  goto 61
+	var  goto 62
+
+
+state 101
+	condStmt : KWD_IF LPAREN expression RPAREN stmt KWD_ELSE . stmt  (33)
+
+	error  shift 34
+	ID  shift 35
+	KWD_IF  shift 36
+	KWD_WHILE  shift 37
+	KWD_RETURN  shift 38
+	LCRLY_BRKT  shift 39
+	.  error
+
+	stmt  goto 104
+	compoundStmt  goto 42
+	assignStmt  goto 43
+	condStmt  goto 44
+	loopStmt  goto 45
+	returnStmt  goto 46
+	var  goto 47
+
+
+state 102
+	loopStmt : KWD_WHILE $$2 LPAREN expression RPAREN stmt .  (35)
+
+	.  reduce 35
+
+
+state 103
+	argList : argList COMMA expression .  (61)
+
+	.  reduce 61
+
+
+state 104
+	condStmt : KWD_IF LPAREN expression RPAREN stmt KWD_ELSE stmt .  (33)
+
+	.  reduce 33
+
+
+State 97 contains 1 shift/reduce conflict.
+
+
+33 terminals, 31 nonterminals
+64 grammar rules, 105 states

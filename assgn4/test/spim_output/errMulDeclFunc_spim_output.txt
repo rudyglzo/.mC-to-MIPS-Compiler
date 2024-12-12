@@ -1,0 +1,7 @@
+Loaded: /opt/homebrew/Cellar/spim/9.1.24/share/exceptions.s
+spim: (parser) Label is defined for the second time on line 67 of file test/out/errMulDeclFunc.s
+	  foo:
+	     ^
+spim: (parser) Label is defined for the second time on line 97 of file test/out/errMulDeclFunc.s
+	  endfoo:
+	        ^
